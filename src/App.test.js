@@ -3,6 +3,6 @@ import App from './App';
 
 test('renders learn react link', () => {
   render(<App />);
-  const linkElement = screen.getByText(/I was changed on the Feature branch/i);
+  const linkElement = screen.getByText(/Link to React.js/i);
   expect(linkElement).toBeInTheDocument();
 });
