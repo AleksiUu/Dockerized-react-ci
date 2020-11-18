@@ -1,70 +1,48 @@
-# Getting Started with Create React App
+# Dockerized React with CI/CD-pipeline
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is newest React v17 dockerized for development and production use.
+Project also includes Travis-CI template that runs test in feature branches and 
+deploys to production in master branch.
 
-## Available Scripts
 
-In the project directory, you can run:
+## Get Started
 
-### `npm start`
+In the project directory to build the local development server you can use either
+docker-compose or Dockerfile.dev
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+#### Dockerfile.dev
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Build the container by running 
 
-### `npm test`
+`docker build -f Dockerfile.dev .`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+After that you get the ID of the container. To enable hot-reload
+you need to attach volume to container so that changes are replicated to development server.
+Run the following command to do this:
 
-### `npm run build`
+`docker run -p 3000:3000 -v /app/node_modules -v $(pwd):/app <container ID>`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+You now have docker running locally on localhost:3000!
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### docker-compose
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Docker-compose is much simpler to use and also runs unit tests at the same time you're developing.
+You only need to run `docker-compose up`, volumes and everything else is already setup in the composer file.
 
-### `npm run eject`
+## Deployment
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Like said previously this project uses Travis-CI for CI/CD. 
+First you need to enable Travis-CI for your github repository at https://travis-ci.com/
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+By default Travis is configured to run unit tests when pushing to Github.
+When pushing to feature branches only unit tests are ran and when doing a PR or pushing straight to master
+you will trigger deployment build.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Configuration to do before first deployment
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+1. Enable Travis-CI for your repository in https://travis-ci.com/
+2. Create AWS IAM User and create Access Credentials for that account. Copy the credentials to Travis-CI environment variables
+3. Create sample Node.js application to Elastic Beanstalk and modify the variables in .travis.yml-file for your environment
 
-## Learn More
+That's it, you're ready to deploy!
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
