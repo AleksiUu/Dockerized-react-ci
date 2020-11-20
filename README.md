@@ -1,13 +1,13 @@
 # Dockerized React with CI/CD-pipeline
 
-This project is newest React v17 dockerized for development and production use.
-Project also includes Travis-CI template that runs test in feature branches and 
+This project ready-to-go template for newest React v17 dockerized for development and production use.
+Project also includes Travis-CI template that runs unit tests in feature branches and 
 deploys to production in master branch.
 
 
 ## Get Started
 
-In the project directory to build the local development server you can use either
+To build the local development server you can use either
 docker-compose or Dockerfile.dev
 
 #### Dockerfile.dev
